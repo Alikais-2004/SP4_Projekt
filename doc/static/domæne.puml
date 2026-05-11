@@ -1,27 +1,24 @@
 @startuml
-'https://plantuml.com/class-diagram
+' Domænemodel for frisørbooking-platform (SP4)
 
-abstract class AbstractList
-abstract AbstractCollection
-interface List
-interface Collection
+class Customer
+class Barber
+class Category
+class Service
+class Booking
+class Review
+class OpeningHours
 
-List <|-- AbstractList
-Collection <|-- AbstractCollection
+' === Relationer ===
+Customer -- Booking : opretter >
+Barber -- Booking : modtager >
 
-Collection <|- List
-AbstractCollection <|- AbstractList
-AbstractList <|-- ArrayList
+Barber *-- Service : tilbyder >
+Barber *-- OpeningHours : har >
 
-class ArrayList {
-Object[] elementData
-size()
-}
+Service -- Category : tilhører >
 
-enum TimeUnit {
-DAYS
-HOURS
-MINUTES
-}
+Booking -- Service : består af >
+Booking -- Review : får >
 
 @enduml

@@ -1,0 +1,120 @@
+@startuml
+' Klassediagram for frisørbooking-platform (SP4) - MVP
+
+' === Abstract base ===
+abstract class User {
+  # id: int
+  # name: String
+  # email: String
+  # passwordHash: String
+  + login(password: String): boolean
+  + logout(): void
+  + updateProfile(name: String, email: String): void
+}
+
+' === Brugertyper ===
+class Customer {
+  - postalCode: String
+  + register(name: String, email: String, password: String, postalCode: String): Customer
+  + getBarbers(category: Category): List<Barber>
+  + bookTime(barber: Barber, service: Service, dateTime: LocalDateTime): Booking
+  + writeReview(booking: Booking, rating: int, comment: String): Review
+  + getBookings(): List<Booking>
+}
+
+class Barber {
+  - salonName: String
+  - description: String
+  - postalCode: String
+  + register(name: String, email: String, password: String, salonName: String, postalCode: String): Barber
+  + updateSalon(salonName: String, description: String, postalCode: String): void
+  + addService(name: String, category: Category, price: double, duration: int): Service
+  + editService(service: Service): void
+  + removeService(service: Service): void
+  + setOpeningHours(weekday: Weekday, open: LocalTime, close: LocalTime): void
+  + getAvailableSlots(date: LocalDate, service: Service): List<LocalTime>
+  + getUpcomingBookings(): List<Booking>
+  + getReviews(): List<Review>
+  + getAverageRating(): double
+  + distanceTo(postalCode: String): double
+}
+
+' === Forretningsobjekter ===
+class Service {
+  - id: int
+  - name: String
+  - category: Category
+  - price: double
+  - durationMinutes: int
+}
+
+class Booking {
+  - id: int
+  - dateTime: LocalDateTime
+  - status: BookingStatus
+  - totalPrice: double
+  + complete(): void
+  + isInPast(): boolean
+  + canBeReviewed(): boolean
+}
+
+class Review {
+  - id: int
+  - rating: int
+  - comment: String
+  - createdAt: LocalDateTime
+}
+
+class OpeningHours {
+  - id: int
+  - weekday: Weekday
+  - openTime: LocalTime
+  - closeTime: LocalTime
+}
+
+' === Enums ===
+enum Category {
+  FADE
+  BUZZ_CUT
+  LONG_HAIR
+  BEARD
+  COLORING
+  STYLING
+}
+
+enum BookingStatus {
+  CONFIRMED
+  COMPLETED
+  CANCELLED
+}
+
+enum Weekday {
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+  SATURDAY
+  SUNDAY
+}
+
+' === Arv ===
+User <|-- Customer
+User <|-- Barber
+
+' === Kompositioner ===
+Barber "1" *-- "0..*" Service : tilbyder >
+Barber "1" *-- "0..*" OpeningHours : har >
+
+' === Associationer ===
+Customer "1" -- "0..*" Booking : opretter >
+Barber "1" -- "0..*" Booking : modtager >
+Booking "0..*" -- "1" Service : består af >
+Booking "1" -- "0..1" Review : får >
+
+' === Enum-koblinger ===
+Service ..> Category
+Booking ..> BookingStatus
+OpeningHours ..> Weekday
+
+@enduml
