@@ -1,8 +1,7 @@
 @startuml
-' Klassediagram for frisørbooking-platform (SP4) - MVP med CSV
+' Klassediagram for frisørbooking-platform (SP4) - MVP
 
-' === MODELLER ===
-
+' === Abstract base ===
 abstract class User {
   # id: int
   # name: String
@@ -13,6 +12,7 @@ abstract class User {
   + updateProfile(name: String, email: String): void
 }
 
+' === Brugertyper ===
 class Customer {
   - postalCode: String
   + register(name: String, email: String, password: String, postalCode: String): Customer
@@ -39,6 +39,7 @@ class Barber {
   + distanceTo(postalCode: String): double
 }
 
+' === Forretningsobjekter ===
 class Service {
   - id: int
   - name: String
@@ -71,8 +72,7 @@ class OpeningHours {
   - closeTime: LocalTime
 }
 
-' === ENUMS ===
-
+' === Enums ===
 enum Category {
   FADE
   BUZZ_CUT
@@ -98,53 +98,21 @@ enum Weekday {
   SUNDAY
 }
 
-' === FIL-HÅNDTERING ===
-
-class FileHandler {
-  - USERS_FILE: String = "data/users.csv"
-  - BARBERS_FILE: String = "data/barbers.csv"
-  - CUSTOMERS_FILE: String = "data/customers.csv"
-  - SERVICES_FILE: String = "data/services.csv"
-  - BOOKINGS_FILE: String = "data/bookings.csv"
-  - REVIEWS_FILE: String = "data/reviews.csv"
-  - OPENING_HOURS_FILE: String = "data/opening_hours.csv"
-  + loadUsers(): List<User>
-  + saveUser(user: User): void
-  + findUserByEmail(email: String): User
-  + loadBarbers(): List<Barber>
-  + findBarberById(id: int): Barber
-  + saveBarber(barber: Barber): void
-  + updateBarber(barber: Barber): void
-  + loadServicesByBarber(barberId: int): List<Service>
-  + saveService(service: Service): void
-  + deleteService(id: int): void
-  + loadBookingsByCustomer(customerId: int): List<Booking>
-  + loadBookingsByBarber(barberId: int): List<Booking>
-  + saveBooking(booking: Booking): void
-  + loadReviewsByBarber(barberId: int): List<Review>
-  + saveReview(review: Review): void
-  + loadOpeningHours(barberId: int): List<OpeningHours>
-  + saveOpeningHours(oh: OpeningHours): void
-  - readCSV(file: String): List<String[]>
-  - writeCSV(file: String, rows: List<String[]>): void
-  - nextId(file: String): int
-}
-
-' === ARV ===
+' === Arv ===
 User <|-- Customer
 User <|-- Barber
 
-' === KOMPOSITIONER ===
+' === Kompositioner ===
 Barber "1" *-- "0..*" Service : tilbyder >
 Barber "1" *-- "0..*" OpeningHours : har >
 
-' === ASSOCIATIONER ===
+' === Associationer ===
 Customer "1" -- "0..*" Booking : opretter >
 Barber "1" -- "0..*" Booking : modtager >
 Booking "0..*" -- "1" Service : består af >
 Booking "1" -- "0..1" Review : får >
 
-' === ENUM-KOBLINGER ===
+' === Enum-koblinger ===
 Service ..> Category
 Booking ..> BookingStatus
 OpeningHours ..> Weekday
