@@ -5,9 +5,10 @@ public class Booking {
 
     private int id;
     private LocalDateTime dateTime;
-
+    private Barber barber;
+    private Service service;
     private BookingStatus status;
-
+    private Review review;
     private double totalPrice;
 
 
@@ -20,6 +21,15 @@ public class Booking {
 
 
     }
+
+    public Booking(Barber barber, Service service, LocalDateTime dateTime) {
+        this.barber = barber;
+        this.service = service;
+        this.dateTime = dateTime;
+        this.status = BookingStatus.CONFIRMED;
+        this.totalPrice = service.getPrice();
+    }
+
 
     public void complete(){
         this.status = BookingStatus.COMPLETED;
@@ -52,5 +62,7 @@ public class Booking {
     }
 
 
-
+    public void attachReview(Review review) {
+        this.review = review;
+    }
 }
