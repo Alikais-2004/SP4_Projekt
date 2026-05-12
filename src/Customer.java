@@ -29,14 +29,15 @@ public class Customer extends User {
     Booking bookTime(Barber barber, Service service, LocalDateTime dateTime){
         Booking booking = new Booking(barber, service, dateTime);
         bookings.add(booking);
-        return book ing;
+        return booking;
     }
 
     Review writeReview(Booking booking, int rating, String comment){
         if (!booking.canBeReviewed()){
             throw new RuntimeException("You can't review your booking");
         }
-        Review review = new Review(this, rating, comments);
+        int generatedId = (int)(Math.random()*1000000);
+        Review review = new Review(generatedId, rating, comment, LocalDateTime.now());
         booking.attachReview(review);
         return review;
     }
