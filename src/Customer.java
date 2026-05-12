@@ -7,6 +7,7 @@ public class Customer extends User {
     String postalCode;
     private List<Booking>bookings;
 
+
     public Customer(int id, String name, String email, String passwordHash, String postalCode) {
         this.id = id;
         this.name = name;
@@ -33,6 +34,7 @@ public class Customer extends User {
     }
 
     Review writeReview(Booking booking, int rating, String comment){
+
         if (!booking.canBeReviewed()){
             throw new RuntimeException("You can't review your booking");
         }
