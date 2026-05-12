@@ -44,7 +44,7 @@ public class Barber {
         services.remove(service);
     }
 
-    public void setOpeningHours(Weekday weekday, LocalTime open, LocalTime close){
+    public void setOpeningHours(WeekDay weekday, LocalTime open, LocalTime close){
         //mangler en struktur til åbningstider
     }
 

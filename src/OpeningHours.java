@@ -3,11 +3,11 @@ import java.time.LocalTime;
 public class OpeningHours {
 
     private int id;
-    private Weekday weekday;
+    private WeekDay weekday;
     private LocalTime openTime;
     private LocalTime closeTime;
 
-    public OpeningHours(Weekday weekday, LocalTime openTime, LocalTime closeTime) {
+    public OpeningHours(WeekDay weekday, LocalTime openTime, LocalTime closeTime) {
         this.weekday = weekday;
         this.openTime = openTime;
         this.closeTime = closeTime;
@@ -20,10 +20,10 @@ public class OpeningHours {
         this.id = id;
     }
 
-    public Weekday getWeekday() {
+    public WeekDay getWeekday() {
         return weekday;
     }
-    public void setWeekday(Weekday weekday) {
+    public void setWeekday(WeekDay weekday) {
         this.weekday = weekday;
     }
 
