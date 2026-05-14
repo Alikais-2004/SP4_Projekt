@@ -27,13 +27,13 @@ public class Customer extends User {
         return new ArrayList<>();
     }
 
-    Booking bookTime(Barber barber, Service service, LocalDateTime dateTime){
+    public Booking bookTime(Barber barber, Service service, LocalDateTime dateTime){
         Booking booking = new Booking(barber, service, dateTime);
         bookings.add(booking);
         return booking;
     }
 
-    Review writeReview(Booking booking, int rating, String comment){
+    public Review writeReview(Booking booking, int rating, String comment){
 
         if (!booking.canBeReviewed()){
             throw new RuntimeException("You can't review your booking");
@@ -44,7 +44,7 @@ public class Customer extends User {
         return review;
     }
 
-    List<Booking>getBookings(){
+    public List<Booking>getBookings(){
         return bookings;
     }
 

@@ -1,0 +1,16 @@
+id,barberId,name,category,price,durationMinutes
+1,1001,Skægtrim,BEARD,150,20
+2,1001,Fade,FADE,250,30
+3,1002,Herreklip,FADE,220,30
+4,1002,Børneklip,BUZZ_CUT,150,20
+5,1003,Farvning,COLORING,600,90
+6,1003,Klip og føn,LONG_HAIR,350,45
+7,1004,Razor fade,FADE,280,40
+8,1004,Skæg,BEARD,160,25
+9,1005,Dameklip,LONG_HAIR,320,50
+10,1006,Herreklip,FADE,240,30
+11,1007,Langt hår klip,LONG_HAIR,360,50
+12,1008,Buzz cut,BUZZ_CUT,140,15
+13,1008,Skægtrim,BEARD,150,20
+14,1009,Styling,STYLING,200,30
+15,1010,Klassisk klip,FADE,230,35
