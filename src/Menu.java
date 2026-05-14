@@ -11,13 +11,6 @@ public class Menu {
 
     private User currentUser = null;
 
-    public Menu() {
-        FileHandler.initializeDataFiles();
-        customers = FileHandler.readCustomers();
-        barbers = FileHandler.readBarbers();
-    }
-
-    // === Hovedløkke ===
     public void start() {
         System.out.println("Velkommen til Frisørbooking!");
         boolean running = true;
@@ -33,7 +26,21 @@ public class Menu {
         System.out.println("På gensyn!");
     }
 
-    // === Menu når ingen er logget ind ===
+    private String readInput(String prompt) {
+        while (true) {
+            System.out.print(prompt + " (skriv 'tilbage' for at afbryde): ");
+            String input = scanner.nextLine().trim();
+            if (input.equalsIgnoreCase("tilbage")) {
+                return null;
+            }
+            if (input.isEmpty()) {
+                System.out.println("Feltet må ikke være tomt. Prøv igen.");
+                continue;
+            }
+            return input;
+        }
+    }
+
     private boolean showLoginMenu() {
         System.out.println("\n--- LOGIN ---");
         System.out.println("1. Log ind");
@@ -54,48 +61,50 @@ public class Menu {
     }
 
     private void registerCustomer() {
-        System.out.print("Navn: ");
-        String name = scanner.nextLine();
-        System.out.print("Email: ");
-        String email = scanner.nextLine();
-        System.out.print("Adgangskode: ");
-        String password = scanner.nextLine();
-        System.out.print("Postnummer: ");
-        String postalCode = scanner.nextLine();
+        String name = readInput("Navn");
+        if (name == null) return;
+
+        String email = readInput("Email");
+        if (email == null) return;
+
+        String password = readInput("Adgangskode");
+        if (password == null) return;
+
+        String postalCode = readInput("Postnummer");
+        if (postalCode == null) return;
 
         Customer customer = Customer.register(name, email, password, postalCode);
-
         customers.add(customer);
-        FileHandler.appendCustomer(customer);
-
         System.out.println("Kundekonto oprettet!");
     }
 
     private void registerBarber() {
-        System.out.print("Navn: ");
-        String name = scanner.nextLine();
-        System.out.print("Email: ");
-        String email = scanner.nextLine();
-        System.out.print("Adgangskode: ");
-        String password = scanner.nextLine();
-        System.out.print("Salonnavn: ");
-        String salonName = scanner.nextLine();
-        System.out.print("Postnummer: ");
-        String postalCode = scanner.nextLine();
+        String name = readInput("Navn");
+        if (name == null) return;
+
+        String email = readInput("Email");
+        if (email == null) return;
+
+        String password = readInput("Adgangskode");
+        if (password == null) return;
+
+        String salonName = readInput("Salonnavn");
+        if (salonName == null) return;
+
+        String postalCode = readInput("Postnummer");
+        if (postalCode == null) return;
 
         Barber barber = Barber.register(name, email, password, salonName, postalCode);
-
         barbers.add(barber);
-        FileHandler.appendBarber(barber);
-
         System.out.println("Frisørkonto oprettet!");
     }
 
     private void login() {
-        System.out.print("Email: ");
-        String email = scanner.nextLine();
-        System.out.print("Adgangskode: ");
-        String password = scanner.nextLine();
+        String email = readInput("Email");
+        if (email == null) return;
+
+        String password = readInput("Adgangskode");
+        if (password == null) return;
 
         for (Customer c : customers) {
             if (c.getEmail().equals(email) && c.login(password)) {
@@ -112,7 +121,6 @@ public class Menu {
         System.out.println("Ugyldigt login.");
     }
 
-    // === Kunde-menu ===
     private void showCustomerMenu() {
         System.out.println("\n--- KUNDE: " + currentUser.getName() + " ---");
         System.out.println("1. Se frisører");
@@ -133,7 +141,6 @@ public class Menu {
         }
     }
 
-    // === Frisør-menu ===
     private void showBarberMenu() {
         System.out.println("\n--- FRISØR: " + currentUser.getName() + " ---");
         System.out.println("1. Rediger profil");
