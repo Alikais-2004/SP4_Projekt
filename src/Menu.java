@@ -6,11 +6,16 @@ public class Menu {
 
     private Scanner scanner = new Scanner(System.in);
 
-    // Midlertidigt datalager — erstattes af FileHandler/CSV senere
     private List<Customer> customers = new ArrayList<>();
     private List<Barber> barbers = new ArrayList<>();
 
     private User currentUser = null;
+
+    public Menu() {
+        FileHandler.initializeDataFiles();
+        customers = FileHandler.readCustomers();
+        barbers = FileHandler.readBarbers();
+    }
 
     // === Hovedløkke ===
     public void start() {
@@ -59,7 +64,10 @@ public class Menu {
         String postalCode = scanner.nextLine();
 
         Customer customer = Customer.register(name, email, password, postalCode);
+
         customers.add(customer);
+        FileHandler.appendCustomer(customer);
+
         System.out.println("Kundekonto oprettet!");
     }
 
@@ -76,7 +84,10 @@ public class Menu {
         String postalCode = scanner.nextLine();
 
         Barber barber = Barber.register(name, email, password, salonName, postalCode);
+
         barbers.add(barber);
+        FileHandler.appendBarber(barber);
+
         System.out.println("Frisørkonto oprettet!");
     }
 
