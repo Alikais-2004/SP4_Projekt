@@ -28,13 +28,13 @@ public class Menu {
 
     private String readInput(String prompt) {
         while (true) {
-            System.out.print(prompt + " (skriv 'tilbage' for at afbryde): ");
+            System.out.print(prompt + ": ");
             String input = scanner.nextLine().trim();
-            if (input.equalsIgnoreCase("tilbage")) {
+            if (input.equals("0")) {
                 return null;
             }
             if (input.isEmpty()) {
-                System.out.println("Feltet må ikke være tomt. Prøv igen.");
+                System.out.println("Feltet må ikke være tomt. Prøv igen (eller 0 for at afbryde).");
                 continue;
             }
             return input;
@@ -61,17 +61,31 @@ public class Menu {
     }
 
     private void registerCustomer() {
+        System.out.println("(Skriv 0 i et felt for at afbryde)");
+
         String name = readInput("Navn");
-        if (name == null) return;
+        if (name == null) {
+            System.out.println("Afbrudt — tilbage til menu.");
+            return;
+        }
 
         String email = readInput("Email");
-        if (email == null) return;
+        if (email == null) {
+            System.out.println("Afbrudt — tilbage til menu.");
+            return;
+        }
 
         String password = readInput("Adgangskode");
-        if (password == null) return;
+        if (password == null) {
+            System.out.println("Afbrudt — tilbage til menu.");
+            return;
+        }
 
         String postalCode = readInput("Postnummer");
-        if (postalCode == null) return;
+        if (postalCode == null) {
+            System.out.println("Afbrudt — tilbage til menu.");
+            return;
+        }
 
         Customer customer = Customer.register(name, email, password, postalCode);
         customers.add(customer);
@@ -79,20 +93,37 @@ public class Menu {
     }
 
     private void registerBarber() {
+        System.out.println("(Skriv 0 i et felt for at afbryde)");
+
         String name = readInput("Navn");
-        if (name == null) return;
+        if (name == null) {
+            System.out.println("Afbrudt — tilbage til menu.");
+            return;
+        }
 
         String email = readInput("Email");
-        if (email == null) return;
+        if (email == null) {
+            System.out.println("Afbrudt — tilbage til menu.");
+            return;
+        }
 
         String password = readInput("Adgangskode");
-        if (password == null) return;
+        if (password == null) {
+            System.out.println("Afbrudt — tilbage til menu.");
+            return;
+        }
 
         String salonName = readInput("Salonnavn");
-        if (salonName == null) return;
+        if (salonName == null) {
+            System.out.println("Afbrudt — tilbage til menu.");
+            return;
+        }
 
         String postalCode = readInput("Postnummer");
-        if (postalCode == null) return;
+        if (postalCode == null) {
+            System.out.println("Afbrudt — tilbage til menu.");
+            return;
+        }
 
         Barber barber = Barber.register(name, email, password, salonName, postalCode);
         barbers.add(barber);
@@ -100,11 +131,19 @@ public class Menu {
     }
 
     private void login() {
+        System.out.println("(Skriv 0 i et felt for at afbryde)");
+
         String email = readInput("Email");
-        if (email == null) return;
+        if (email == null) {
+            System.out.println("Afbrudt — tilbage til menu.");
+            return;
+        }
 
         String password = readInput("Adgangskode");
-        if (password == null) return;
+        if (password == null) {
+            System.out.println("Afbrudt — tilbage til menu.");
+            return;
+        }
 
         for (Customer c : customers) {
             if (c.getEmail().equals(email) && c.login(password)) {
