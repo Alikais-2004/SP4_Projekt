@@ -34,7 +34,7 @@ public class Menu {
                 return null;
             }
             if (input.isEmpty()) {
-                System.out.println("Feltet må ikke være tomt. Prøv igen (eller 0 for at afbryde).");
+                System.out.println("Feltet må ikke være tomt. Prøv igen.");
                 continue;
             }
             return input;
@@ -61,8 +61,6 @@ public class Menu {
     }
 
     private void registerCustomer() {
-        System.out.println("(Skriv 0 i et felt for at afbryde)");
-
         String name = readInput("Navn");
         if (name == null) {
             System.out.println("Afbrudt — tilbage til menu.");
@@ -93,8 +91,6 @@ public class Menu {
     }
 
     private void registerBarber() {
-        System.out.println("(Skriv 0 i et felt for at afbryde)");
-
         String name = readInput("Navn");
         if (name == null) {
             System.out.println("Afbrudt — tilbage til menu.");
@@ -131,8 +127,6 @@ public class Menu {
     }
 
     private void login() {
-        System.out.println("(Skriv 0 i et felt for at afbryde)");
-
         String email = readInput("Email");
         if (email == null) {
             System.out.println("Afbrudt — tilbage til menu.");
