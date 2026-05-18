@@ -1,0 +1,5 @@
+id,role,name,email,password,postalCode
+1,customer,John Doe,john.doe@example.com,password123,2800
+991283,customer,Mahdi,Mahdiald.2003@gmail.com,Mahdi123,2800
+189601,barber,Ali,Kanarie@gmail.com,SK123,2000
+322088,customer,Zouhir,Z@gmail.com,Z123,2730

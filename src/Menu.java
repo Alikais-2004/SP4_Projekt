@@ -16,7 +16,7 @@ public class Menu {
     private User currentUser = null;
 
     public void start() {
-        loadBarbersFromFile();
+        loadUsersFromFiles();
         loadServicesFromFile();
         System.out.println("Velkommen til Frisørbooking!");
         boolean running = true;
@@ -78,6 +78,10 @@ public class Menu {
             System.out.println("Afbrudt — tilbage til menu.");
             return;
         }
+        if (FileHandler.emailExists(email)) {
+            System.out.println("Der findes allerede en bruger med den email.");
+            return;
+        }
 
         String password = readInput("Adgangskode");
         if (password == null) {
@@ -93,6 +97,7 @@ public class Menu {
 
         Customer customer = Customer.register(name, email, password, postalCode);
         customers.add(customer);
+        FileHandler.appendCustomerLogin(customer);
         System.out.println("Kundekonto oprettet!");
     }
 
@@ -106,6 +111,10 @@ public class Menu {
         String email = readInput("Email");
         if (email == null) {
             System.out.println("Afbrudt — tilbage til menu.");
+            return;
+        }
+        if (FileHandler.emailExists(email)) {
+            System.out.println("Der findes allerede en bruger med den email.");
             return;
         }
 
@@ -129,6 +138,8 @@ public class Menu {
 
         Barber barber = Barber.register(name, email, password, salonName, postalCode);
         barbers.add(barber);
+        FileHandler.appendBarberLogin(barber);
+        FileHandler.appendSalon(barber);
         System.out.println("Frisørkonto oprettet!");
     }
 
@@ -205,25 +216,9 @@ public class Menu {
     }
 
 
-    private void loadBarbersFromFile() {
-        try (BufferedReader br = new BufferedReader(new FileReader("data/barbers.csv"))) {
-            String line;
-            br.readLine();
-            while ((line = br.readLine()) != null) {
-                String[] parts = line.split(",");
-                int id = Integer.parseInt(parts[0]);
-                String name = parts[1];
-                String email = parts[2];
-                String passwordHash = parts[3];
-                String salonName = parts[4];
-                String description = parts[5];
-                String postalCode = parts[6];
-                Barber barber = new Barber(id, name, email, passwordHash, salonName, description, postalCode);
-                barbers.add(barber);
-            }
-        } catch (IOException e) {
-            System.out.println("Kunne ikke læse barbers.csv: " + e.getMessage());
-        }
+    private void loadUsersFromFiles() {
+        customers = FileHandler.readCustomersFromLogin();
+        barbers = FileHandler.readBarbersFromLoginAndSalon();
     }
     private void showBarbers() {
         System.out.println("\n--- FRISØRER ---");

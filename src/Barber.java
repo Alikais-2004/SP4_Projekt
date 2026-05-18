@@ -121,4 +121,12 @@ public class Barber extends User {
     public List<Service> getServices() {
         return services;
     }
+
+    @Override
+    public String toString() {
+        if (salonName == null || salonName.trim().isEmpty()) {
+            return name;
+        }
+        return salonName + " - " + name;
+    }
 }

@@ -1,4 +1,5 @@
 public enum BookingStatus {
+    PENDING,
     CONFIRMED,
     COMPLETED,
     CANCELLED;
@@ -8,7 +9,7 @@ public enum BookingStatus {
     }
 
     public boolean isActive() {
-        return this == CONFIRMED;
+        return this == PENDING || this == CONFIRMED;
     }
 
     public static BookingStatus fromString(String value) {

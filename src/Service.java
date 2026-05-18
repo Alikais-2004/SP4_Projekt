@@ -47,4 +47,9 @@ public class Service {
     public void setDurationMinutes(int durationMinutes) {
         this.durationMinutes = durationMinutes;
     }
+
+    @Override
+    public String toString() {
+        return name + " - " + price + " kr - " + durationMinutes + " min";
+    }
 }

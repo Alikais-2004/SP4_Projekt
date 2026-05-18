@@ -7,5 +7,16 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module-library">
+      <library name="OpenJFX 17">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/.m2/repository/org/openjfx/javafx-base/17/javafx-base-17-win.jar!/" />
+          <root url="jar://$USER_HOME$/.m2/repository/org/openjfx/javafx-graphics/17/javafx-graphics-17-win.jar!/" />
+          <root url="jar://$USER_HOME$/.m2/repository/org/openjfx/javafx-controls/17/javafx-controls-17-win.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>
